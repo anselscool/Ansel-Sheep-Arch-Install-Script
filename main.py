@@ -78,14 +78,14 @@ def prestrapsetup():
     os.system(f"mount /dev/{bootlocation} /mnt/boot/efi")
     os.system(f"swapon /dev/{swaplocation}")
 
+    global kernel
+    global editor
+
     kernel = input("[INSTALL]: Chose a kernel (examples: linux, linux-zen, linux-lts): ")
     shell = input("[INSTALL]: Chose a shell (examples: bash, fish, zsh): ")
     editor = input("[INSTALL]: Chose an editor (examples: vim, nano, neovim, micro): ")
     ucode = input("[INSTALL]: State your processor (amd/intel): ")
     ucode = ucode.replace(ucode, f"{ucode}-ucode")
-    
-    global kernel
-    global editor
     
     packages.append(shell)
     packages.append(ucode)
