@@ -84,12 +84,12 @@ def prestrapsetup():
     ucode = input("[INSTALL]: State your processor (amd/intel): ")
     ucode = ucode.replace(ucode, f"{ucode}-ucode")
     print(f"[INSTALL]: Set to install base linux-firmware base-devel efibootmgr {kernel, shell, ucode, editor}")
-    packagestring = " ".join(packages)
 
+    packagestring = " ".join(packages)
     return packagestring
 
 def pacstrap(packagestring):
-    print("[INSTALL]: Running pacstrap")
+    print(f"[INSTALL]: Running pacstrap with: {packagestring}")
     os.system(f"pacstrap -K /mnt {packagestring}")
 
 def poststrapsetup():
