@@ -9,7 +9,7 @@ asais = """
 """
 
 print(asais)
-print("ansel + whyisthesheep arch install script")
+print("ansel + whyisthesheep arch install script\n")
 
 hostname = subprocess.run(["cat", "/etc/hostname"], capture_output=True, text=True).stdout.strip()
 if hostname == "archiso":
@@ -30,3 +30,4 @@ changekmp = changekmp.upper().replace("Y", "")
 if changekmp == "":
     newkeymap = input("[SETUP]: Set keymap (eg uk, us, it) ")
     os.system(f"loadkeys {newkeymap}")
+
