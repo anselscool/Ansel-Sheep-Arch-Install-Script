@@ -17,7 +17,7 @@ if hostname == "archiso":
 else:
     exit()
 
-ping_result = subprocess.run(["curl", "https://google.com"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+ping_result = subprocess.run(["curl", "https://archlinux.org"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 if ping_result.returncode != 6:
     print("[MAIN]: Internet active")
 else:
