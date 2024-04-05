@@ -11,11 +11,12 @@ asais = """
 print(asais)
 print("ansel + whyisthesheep arch install script")
 
-if os.system("cat /etc/hostname") == "archiso":
+hostname = subprocess.run(["cat", "/etc/hostname"], capture_output=True, text=True).stdout.strip()
+if hostname == "archiso":
     print("[MAIN]: Arch Linux installation environment detected")
 else:
     print("[FATAL]: Arch seems already to be installed (development mode - skipping)")
-    #exit()
+    # exit()
 
 ping_result = subprocess.run(["ping", "-c", "2", "archlinux.org"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 if ping_result.returncode != 0:
