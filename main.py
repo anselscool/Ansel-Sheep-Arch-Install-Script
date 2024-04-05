@@ -28,4 +28,4 @@ changekmp = input("[SETUP]: Do you wish to change the keyboard layout [Y/n] ")
 changekmp = changekmp.upper().replace("Y", "")
 if changekmp == "":
     newkeymap = input("[SETUP]: Set keymap (eg uk, us, it) ")
-    os.system(f"loadkeys $(newkeymap)")
+    os.system(f"loadkeys {newkeymap}")
