@@ -2,6 +2,14 @@ import os
 import subprocess
 from time import sleep
 
+def confirm(message):
+    checkconfirm = input(message)
+    checkconfirm = checkconfirm.upper().replace("Y", "")
+    if checkconfirm == "":
+        return True
+    else:
+        return False
+
 asais = """
     ___   _____ ___    _________
    /   | / ___//   |  /  _/ ___/
@@ -30,18 +38,50 @@ def checks():
     return
 
 def prestrapsetup():
-    changekmp = input("[SETUP]: Do you wish to change the keyboard layout [Y/n] ")
-    changekmp = changekmp.upper().replace("Y", "")
-    if changekmp == "":
+    if confirm("[SETUP]: Do you wish to change the keyboard layout [Y/n] "):
         newkeymap = input("[SETUP]: Set keymap (eg uk, us, fr, it) ")
         os.system(f"loadkeys {newkeymap}")
     
-    print("[SETUP]: Please format Boot (~100mb) Swap (~Your ram) Root (the remaining storage). Please take note of the /dev/names.")
+    print("[SETUP]: Please format Boot (~100mb) {OPTIONAL Swap (~Your ram)} Root (the remaining storage). Please take note of the /dev/names.")
     for i in range(0, 5):
         sleep(1.5)
         print(f"[SETUP]: Opening cfdisk {i+1}")
     os.system("cfdisk")
-    print(90210)
+    os.system("clear")
+
+    os.system("lsblk")
+    print("\n")
+    fstype = input("[SETUP]: Choose filetype (ext4 OR btrfs)")
+    rootlocation = input("[SETUP]: Root location: /dev/")
+    print(f"[SETUP]: Using root location /dev/{rootlocation}")
+    os.system(f"mkfs.{fstype} /dev/{rootlocation}")
+    os.system("clear")
+
+    os.system("lsblk")
+    print("\n")
+    bootlocation = input("[SETUP]: Boot location: /dev/")
+    print(f"[SETUP]: Using boot location /dev/{bootlocation}")
+    os.system(f"mkfs.fat -F 32 /dev/{bootlocation}")
+    os.system("clear")
+
+    os.system("lsblk")
+    print("\n")
+    if confirm("[SETUP]: Did you create a swap partition [Y/n] "):
+        swaplocation = input("[SETUP]: Swap drive: /dev/")
+        print(f"[SETUP]: Using swap location /dev/{swaplocation}")
+        os.system(f"mkswap /dev/{swaplocation}")
+    os.system("clear")
+
+    os.system(f"mount /dev/{rootlocation} /mnt")
+    os.system("mkdir -p /mnt/boot/efi")
+    os.system(f"mount /dev/{bootlocation} /mnt/boot/efi")
+    os.system(f"swapon /dev/{swaplocation}")
+
+    kernel = input("Chose a kernel (examples: linux, linux-zen, linux-lts): ")
+    shell = input("Chose a shell (examples: bash, fish, zsh): ")
+    ucode = input("State your processor (amd/intel): ")
+    ucode = ucode.replace(ucode, f"{ucode}-ucode")
+    print(kernel, shell, ucode)
 
 def pacstrap(packages):
     pass
