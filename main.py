@@ -25,7 +25,7 @@ else:
     print("[FATAL]: Internet unreachable. Try using iwctl.")
     exit()
 
-changekmp = print("[SETUP]: Do you wish to change the keyboard layout [Y/n] ")
+changekmp = input("[SETUP]: Do you wish to change the keyboard layout [Y/n] ")
 changekmp = changekmp.upper().replace("Y", "")
 if changekmp == "":
     newkeymap = input("[SETUP]: Set keymap (eg uk, us, it) ")
