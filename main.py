@@ -1,6 +1,5 @@
 import os, subprocess
 
-hostname = os.system("cat /etc/hostname")
 asais = """
     ___   _____ ___    _________
    /   | / ___//   |  /  _/ ___/
@@ -12,7 +11,7 @@ asais = """
 print(asais)
 print("ansel + whyisthesheep arch install script")
 
-if hostname == "archiso":
+if os.system("cat /etc/hostname") == "archiso":
     print("[MAIN]: Arch Linux installation environment detected")
 else:
     print("[FATAL]: Arch seems already to be installed (development mode - skipping)")
