@@ -52,7 +52,7 @@ def prestrapsetup():
 
     os.system("lsblk")
     print("\n")
-    fstype = input("[SETUP]: Choose filetype (ext4 OR btrfs)")
+    fstype = input("[SETUP]: Choose filetype (ext4 OR btrfs): ")
     rootlocation = input("[SETUP]: Root location: /dev/")
     print(f"[SETUP]: Using root location /dev/{rootlocation}")
     os.system(f"mkfs.{fstype} /dev/{rootlocation}")
@@ -90,28 +90,32 @@ def prestrapsetup():
     packages.append(shell)
     packages.append(ucode)
 
-def pacstrap(packagestring):
+def pacstrap():
     print("[INSTALL]: Running pacstrap")
     os.system(f"pacstrap -K /mnt base linux-firmware base-devel grub {kernel} {editor}")
 
 def poststrapsetup():
     print("[POST-INSTALL]: Generating fstab")
     os.system("genfstab /mnt > /mnt/etc/fstab")
+    timezone = input("[POST-INSTALL]: Set time zone format Region/City (e.g Europe/London): ")
     commands = [
-        "command1",
-        "command2",
-        "command3"
+        "pacman -Sy",
+        f"pacman -S {packages[0]} {packages[1]} neofetch xdg-user-dirs pipewire base-devel",
+        f"ln -sf /usr/share/zoneinfo/{timezone} /etc/localtime",
+        "hwclock --systohc"
     ]
     command_string = " && ".join(commands)
     os.system(f"arch-chroot /mnt /bin/bash -c '{command_string}'")
+    os.system("clear")
+    print(asais + "\nansel + whyisthesheep arch install script\n")
 
 def ricing():
     pass
 
 def run():
     checks()
-    packagestring = prestrapsetup()
-    pacstrap(packagestring)
+    prestrapsetup()
+    pacstrap()
     poststrapsetup()
     ricing()
 
