@@ -19,7 +19,7 @@ asais = """
 """
 
 print(asais + "\nansel + whyisthesheep arch install script\n")
-packages = []
+packages = ["base", "linux-firmware", "base-devel", "efibootmgr"]
 
 def checks():
     hostname = subprocess.run(["cat", "/etc/hostname"], capture_output=True, text=True).stdout.strip()
@@ -35,6 +35,7 @@ def checks():
     else:
         print("[FATAL]: Internet unreachable. Try using iwctl.")
         exit()
+
     return
 
 def prestrapsetup():
@@ -77,14 +78,19 @@ def prestrapsetup():
     os.system(f"mount /dev/{bootlocation} /mnt/boot/efi")
     os.system(f"swapon /dev/{swaplocation}")
 
-    kernel = input("Chose a kernel (examples: linux, linux-zen, linux-lts): ")
-    shell = input("Chose a shell (examples: bash, fish, zsh): ")
-    ucode = input("State your processor (amd/intel): ")
+    kernel = input("[INSTALL]: Chose a kernel (examples: linux, linux-zen, linux-lts): ")
+    shell = input("[INSTALL]: Chose a shell (examples: bash, fish, zsh): ")
+    editor = input("[INSTALL]: Chose an editor (examples: vim, nano, neovim, micro): ")
+    ucode = input("[INSTALL]: State your processor (amd/intel): ")
     ucode = ucode.replace(ucode, f"{ucode}-ucode")
-    print(kernel, shell, ucode)
+    print(f"[INSTALL]: Set to install base linux-firmware base-devel efibootmgr {kernel, shell, ucode, editor}")
+    packagestring = " ".join(packages)
 
-def pacstrap(packages):
-    pass
+    return packagestring
+
+def pacstrap(packagestring):
+    print("[INSTALL]: Running pacstrap")
+    os.system(f"pacstrap -K /mnt {packagestring}")
 
 def poststrapsetup():
     pass
@@ -94,8 +100,8 @@ def ricing():
 
 def run():
     checks()
-    prestrapsetup()
-    pacstrap(packages)
+    packagestring = prestrapsetup()
+    pacstrap(packagestring)
     poststrapsetup()
     ricing()
 
