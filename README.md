@@ -5,7 +5,7 @@ An install script for arch linux
 > :warning: **NOT WORKING**: The following command is not completed as the project is WIP
 
 Run this in the archlinux live environment
-`bash | curl -s {URL HERE}`
+`nothing yet`
 
 ## Details
 The project uses piping bash. It is reccommended to view the source of scripts before doing so. This installation follows the official [arch wiki](https://wiki.archlinux.org) (unlike [certain other](https://github.com/archlinux/archinstall) installers).
