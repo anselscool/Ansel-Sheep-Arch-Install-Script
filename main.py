@@ -15,7 +15,8 @@ hostname = subprocess.run(["cat", "/etc/hostname"], capture_output=True, text=Tr
 if hostname == "archiso":
     print("[MAIN]: Arch Linux installation environment detected")
 else:
-    exit()
+    print("[FATAL]: Arch Linux seems to already be installed to your disk")
+    exit() # COMMENT THIS LINE IF THE HOSTNAME IS NOT "archiso"
 
 ping_result = subprocess.run(["curl", "https://archlinux.org"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 if ping_result.returncode != 6:
