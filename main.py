@@ -18,8 +18,8 @@ else:
     print("[FATAL]: Arch seems already to be installed (development mode - skipping)")
     # exit()
 
-ping_result = subprocess.run(["ping", "-c", "2", "archlinux.org"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-if ping_result.returncode != 0:
+ping_result = subprocess.run(["curl", "https://google.com"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+if ping_result.returncode != 6:
     print("[MAIN]: Internet active")
 else:
     print("[FATAL]: Internet unreachable. Try using iwctl.")
