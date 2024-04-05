@@ -19,7 +19,7 @@ asais = """
 """
 
 print(asais + "\nansel + whyisthesheep arch install script\n")
-packages = ["base", "linux-firmware", "base-devel", "efibootmgr"]
+packages = []
 
 def checks():
     hostname = subprocess.run(["cat", "/etc/hostname"], capture_output=True, text=True).stdout.strip()
@@ -83,17 +83,27 @@ def prestrapsetup():
     editor = input("[INSTALL]: Chose an editor (examples: vim, nano, neovim, micro): ")
     ucode = input("[INSTALL]: State your processor (amd/intel): ")
     ucode = ucode.replace(ucode, f"{ucode}-ucode")
-    print(f"[INSTALL]: Set to install base linux-firmware base-devel efibootmgr {kernel, shell, ucode, editor}")
-
-    packagestring = " ".join(packages)
-    return packagestring
+    
+    global kernel
+    global editor
+    
+    packages.append(shell)
+    packages.append(ucode)
 
 def pacstrap(packagestring):
-    print(f"[INSTALL]: Running pacstrap with: {packagestring}")
-    os.system(f"pacstrap -K /mnt {packagestring}")
+    print("[INSTALL]: Running pacstrap")
+    os.system(f"pacstrap -K /mnt base linux-firmware base-devel grub {kernel} {editor}")
 
 def poststrapsetup():
-    pass
+    print("[POST-INSTALL]: Generating fstab")
+    os.system("genfstab /mnt > /mnt/etc/fstab")
+    commands = [
+        "command1",
+        "command2",
+        "command3"
+    ]
+    command_string = " && ".join(commands)
+    os.system(f"arch-chroot /mnt /bin/bash -c '{command_string}'")
 
 def ricing():
     pass
