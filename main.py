@@ -36,11 +36,12 @@ def prestrapsetup():
         newkeymap = input("[SETUP]: Set keymap (eg uk, us, fr, it) ")
         os.system(f"loadkeys {newkeymap}")
     
-    print("[SETUP]: Please format Boot (~100mb) Swap (~Your ram) Root (the remaining storage)")
+    print("[SETUP]: Please format Boot (~100mb) Swap (~Your ram) Root (the remaining storage). Please take note of the /dev/names.")
     for i in range(1, 5):
         sleep(1)
         print(f"[SETUP]: Opening cfdisk {i}")
     os.system("cfdisk")
+    print(90210)
 
 def pacstrap(packages):
     pass
