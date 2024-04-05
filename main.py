@@ -37,7 +37,7 @@ def prestrapsetup():
         os.system(f"loadkeys {newkeymap}")
     
     print("[SETUP]: Please format Boot (~100mb) Swap (~Your ram) Root (the remaining storage)")
-    for i in range(0, 2):
+    for i in range(1, 5):
         sleep(1)
         print(f"[SETUP]: Opening cfdisk {i}")
     os.system("cfdisk")
@@ -57,3 +57,5 @@ def run():
     pacstrap(packages)
     poststrapsetup()
     ricing()
+
+run()
