@@ -75,6 +75,7 @@ def prestrapsetup():
 
     os.system(f"mount /dev/{rootlocation} /mnt")
     os.system("mkdir -p /mnt/boot/efi")
+    os.system("mkdir /mnt/tmp")
     os.system(f"mount /dev/{bootlocation} /mnt/boot/efi")
     os.system(f"swapon /dev/{swaplocation}")
 
@@ -98,25 +99,15 @@ def poststrapsetup():
     print("[POST-INSTALL]: Generating fstab")
     os.system("genfstab /mnt > /mnt/etc/fstab")
     timezone = input("[POST-INSTALL]: Set time zone format Region/City (e.g Europe/London): ")
-    commands = [
-        "pacman -Sy",
-        f"pacman -S {packages[0]} {packages[1]} neofetch xdg-user-dirs pipewire base-devel",
-        f"ln -sf /usr/share/zoneinfo/{timezone} /etc/localtime",
-        "hwclock --systohc"
-    ]
-    command_string = " && ".join(commands)
-    os.system(f"arch-chroot /mnt /bin/bash -c '{command_string}'")
+    os.system("cp script/chrootscript.py /mnt/tmp")
+    os.system(f"arch-chroot /mnt /bin/bash -c 'python /tmp/chrootscript.py {packages[0]} {packages[1]} {timezone}'")
     os.system("clear")
     print(asais + "\nansel + whyisthesheep arch install script\n")
-
-def ricing():
-    pass
 
 def run():
     checks()
     prestrapsetup()
     pacstrap()
     poststrapsetup()
-    ricing()
 
 run()
