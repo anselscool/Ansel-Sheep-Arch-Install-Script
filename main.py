@@ -94,12 +94,14 @@ def prestrapsetup():
 def pacstrap():
     print("[INSTALL]: Running pacstrap")
     os.system(f"pacstrap -K /mnt base linux-firmware base-devel grub networkmanager {kernel} {editor}")
+    os.system("clear")
+    print(asais + "\nansel + whyisthesheep arch install script\n")
 
 def poststrapsetup():
     print("[POST-INSTALL]: Generating fstab")
     os.system("genfstab /mnt > /mnt/etc/fstab")
     timezone = input("[POST-INSTALL]: Set time zone format Region/City (e.g Europe/London): ")
-    os.system(f"arch-chroot /mnt /bin/bash -c 'curl https://raw.githubusercontent.com/anselscool/asais/main/script/chrootscript.py > /tmp/chrootscript.py && python /tmp/chrootscript.py {packages[0]} {packages[1]} {timezone}'")
+    os.system(f"arch-chroot /mnt && curl https://raw.githubusercontent.com/anselscool/asais/main/script/chrootscript.py > /tmp/chrootscript.py && python /tmp/chrootscript.py {packages[0]} {packages[1]} {timezone}")
     os.system("clear")
     print(asais + "\nansel + whyisthesheep arch install script\n")
 
