@@ -101,6 +101,8 @@ def poststrapsetup():
     print("[POST-INSTALL]: Generating fstab")
     os.system("genfstab /mnt > /mnt/etc/fstab")
     timezone = input("[POST-INSTALL]: Set time zone format Region/City (e.g Europe/London): ")
+    if timezone == "":
+        timezone = "Europe/London"
     os.system(f"arch-chroot /mnt curl https://raw.githubusercontent.com/anselscool/asais/main/script/chrootscript.py > /tmp/chrootscript.py && python /tmp/chrootscript.py {packages[0]} {packages[1]} {timezone}")
     os.system("clear")
     print(asais + "\nansel + whyisthesheep arch install script\n")
