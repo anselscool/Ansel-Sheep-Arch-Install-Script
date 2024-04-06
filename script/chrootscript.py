@@ -2,6 +2,14 @@ import sys
 import os
 from time import sleep
 
+def confirm(message):
+    checkconfirm = input(message)
+    checkconfirm = checkconfirm.upper().replace("Y", "")
+    if checkconfirm == "":
+        return True
+    else:
+        return False
+
 asais = """
     ___   _____ ___    _________
    /   | / ___//   |  /  _/ ___/
@@ -34,5 +42,22 @@ os.system("nano /etc/vconsole.conf")
 os.system("clear")
 hostname = ("[POST-INSTALL]: Please choose a device hostname: ")
 os.system(f"echo '{hostname}' > /etc/hostname")
-print("[POST-INSTALL]: Please select a new root password: ")
+print("[USER]: Please select a new root password: ")
 os.system("passwd")
+username = input("[POST-INSTALL]: Please input a username: ")
+os.system(f"useradd -m -G wheel -s /bin/{shell} {username}")
+print(f"[USER]: Please input a password for {username}")
+os.system(f"passwd {hostname}")
+print("[USER]: Please uncomment %wheel ALL=(ALL) ALL")
+os.system("EDITOR=nano visudo")
+if confirm("[USER]: Install and configure doas [Y/n]"):
+    os.system("pacman -Syuu")
+    os.system("pacman -S doas")
+    os.system(f"echo 'permit {username}' > /etc/doas.conf")
+print("[USER]: Enabling NetworkManager")
+os.system(f"su {username} && systemctl enable NetworkManager")
+os.system("lsblk")
+disk = input("[SYSTEM]: Which disk (not partition) have you fortmatted and installed arch to (e.g /dev/sda NOT /dev/sda1): /dev/")
+print("[SYSTEM]: Installing grub")
+os.system(f"grub-install /dev/{disk}")
+os.system("grub-mkconfig -o /boot/efi/grub/grub.cfg")

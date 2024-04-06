@@ -93,7 +93,7 @@ def prestrapsetup():
 
 def pacstrap():
     print("[INSTALL]: Running pacstrap")
-    os.system(f"pacstrap -K /mnt base linux-firmware base-devel grub {kernel} {editor}")
+    os.system(f"pacstrap -K /mnt base linux-firmware base-devel grub networkmanager {kernel} {editor}")
 
 def poststrapsetup():
     print("[POST-INSTALL]: Generating fstab")
