@@ -8,11 +8,15 @@ Run this in the archlinux live environment
 `nothing yet`
 
 ## Details
-The project uses piping bash. It is reccommended to view the source of scripts before doing so. This installation follows the official [arch wiki](https://wiki.archlinux.org) (unlike [certain other](https://github.com/archlinux/archinstall) installers).
+This installation follows the official [arch wiki](https://wiki.archlinux.org) (unlike [certain other](https://github.com/archlinux/archinstall) installers).
 
 ## Roadmap
 - [x] README/Licence
-- [ ] First build
+- [x] Functional installer
+- [ ] Proper documentation
+- [ ] Input validation/other various enhancements
+- [ ] Post system install script
+- [ ] Dotfiles loader
 
 ## Other info
 asisa is licenced under \
