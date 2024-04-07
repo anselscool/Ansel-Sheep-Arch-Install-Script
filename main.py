@@ -82,9 +82,9 @@ def prestrapsetup():
     global kernel
     global editor
 
-    kernel = input("[INSTALL]: Chose a kernel (examples: linux, linux-zen, linux-lts): ")
-    shell = input("[INSTALL]: Chose a shell (examples: bash, fish, zsh): ")
-    editor = input("[INSTALL]: Chose an editor (examples: vim, nano, neovim, micro): ")
+    kernel = input("[INSTALL]: Choose a kernel (examples: linux, linux-zen, linux-lts): ")
+    shell = input("[INSTALL]: Choose a shell (examples: bash, fish, zsh): ")
+    editor = input("[INSTALL]: Choose an editor (examples: vim, nano, emacs, neovim, micro): ")
     ucode = input("[INSTALL]: State your processor (amd/intel): ")
     ucode = ucode.replace(ucode, f"{ucode}-ucode")
     
@@ -93,7 +93,7 @@ def prestrapsetup():
 
 def pacstrap():
     print("[INSTALL]: Running pacstrap")
-    os.system(f"pacstrap -K /mnt base linux-firmware base-devel grub networkmanager {kernel} {editor}")
+    os.system(f"pacstrap -K /mnt base linux-firmware grub efibootmgr networkmanager {kernel} {editor}")
     os.system("clear")
     print(asais + "\nansel + whyisthesheep arch install script\n")
 
